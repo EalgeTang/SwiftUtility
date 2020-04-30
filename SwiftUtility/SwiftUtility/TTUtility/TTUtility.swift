@@ -38,11 +38,11 @@ public struct TTNamespaceWrapper<T>: TTTypeWrapperProtocol {
 }
 
 extension NSObject: TTNamespaceWrappable{}
-extension TTTypeWrapperProtocol {
+extension TTTypeWrapperProtocol where WrappedType: NSObject{
     
     func clasName() -> String{
         let cls = type(of: wrappedValue)
-        return NSStringFromClass(cls as! AnyClass)
+        return NSStringFromClass(cls)
     }
 }
 
@@ -67,7 +67,7 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
 //    }
 }
 
-extension TTTypeWrapperProtocol where WrappedType == UICollectionViewCell{
+extension TTTypeWrapperProtocol where WrappedType: UICollectionViewCell{
     
     var cellIdentifer: String {
         return "string"
