@@ -40,7 +40,7 @@ public struct TTNamespaceWrapper<T>: TTTypeWrapperProtocol {
 extension NSObject: TTNamespaceWrappable{}
 extension TTTypeWrapperProtocol where WrappedType: NSObject{
     
-    func clasName() -> String{
+    func className() -> String{
         let cls = type(of: wrappedValue)
         return NSStringFromClass(cls)
     }
@@ -74,7 +74,8 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
 extension TTTypeWrapperProtocol where WrappedType: UICollectionViewCell {
     
     var cellIdentifer: String {
-        return "string"
+        let cellId = wrappedValue.tt.className()
+        return cellId + "ID"
     }
     
 }
