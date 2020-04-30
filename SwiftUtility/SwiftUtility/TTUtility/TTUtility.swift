@@ -44,6 +44,10 @@ extension TTTypeWrapperProtocol where WrappedType: NSObject{
         let cls = type(of: wrappedValue)
         return NSStringFromClass(cls)
     }
+    
+//    static func className() -> String {
+//        return NSStringFromClass(WrappedType.self)
+//    }
 }
 
 extension TTTypeWrapperProtocol where WrappedType: UIView {
@@ -67,7 +71,7 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
 //    }
 }
 
-extension TTTypeWrapperProtocol where WrappedType: UICollectionViewCell{
+extension TTTypeWrapperProtocol where WrappedType: UICollectionViewCell {
     
     var cellIdentifer: String {
         return "string"
