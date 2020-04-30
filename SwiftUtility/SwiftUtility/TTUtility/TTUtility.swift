@@ -38,16 +38,15 @@ public struct TTNamespaceWrapper<T>: TTTypeWrapperProtocol {
 }
 
 extension NSObject: TTNamespaceWrappable{}
-extension TTTypeWrapperProtocol where WrappedType == NSObject {
+extension TTTypeWrapperProtocol {
     
     func clasName() -> String{
-
-        
-        
+        let cls = type(of: wrappedValue)
+        return NSStringFromClass(cls as! AnyClass)
     }
 }
 
-extension TTTypeWrapperProtocol where WrappedType == UIView {
+extension TTTypeWrapperProtocol where WrappedType: UIView {
      /// 设置圆角
     func setupConnerRadius(_ radius: CGFloat, borderColor: UIColor? = nil, borderWidth: CGFloat = 0) {
         wrappedValue.layer.masksToBounds = true
