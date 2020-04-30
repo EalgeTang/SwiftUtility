@@ -37,7 +37,16 @@ public struct TTNamespaceWrapper<T>: TTTypeWrapperProtocol {
     }
 }
 
-extension UIView: TTNamespaceWrappable {}
+extension NSObject: TTNamespaceWrappable{}
+extension TTTypeWrapperProtocol where WrappedType == NSObject {
+    
+    func clasName() -> String{
+
+        
+        
+    }
+}
+
 extension TTTypeWrapperProtocol where WrappedType == UIView {
      /// 设置圆角
     func setupConnerRadius(_ radius: CGFloat, borderColor: UIColor? = nil, borderWidth: CGFloat = 0) {
@@ -46,11 +55,29 @@ extension TTTypeWrapperProtocol where WrappedType == UIView {
         wrappedValue.layer.borderWidth = borderWidth
         wrappedValue.layer.borderColor = borderColor?.cgColor
     }
+//    ///添加手势     `@discardableResult` 用来告知编辑器结果外部可以不用接收, 否则编辑器会报黄
+//    @discardableResult
+//    func addGesture(_ target:Any?,  action: Selector, cls: AnyClass) -> UIGestureRecognizer? {
+//
+//        guard cls.isSubclass(of: UIGestureRecognizer.self) else {
+//            return nil;
+//        }
+//        wrappedValue.isUserInteractionEnabled = true
+//
+//        return nil
+//    }
 }
 
-extension Array: TTNamespaceWrappable{}
+extension TTTypeWrapperProtocol where WrappedType == UICollectionViewCell{
+    
+    var cellIdentifer: String {
+        return "string"
+    }
+    
+}
 
 class TTUtility: NSObject {
 
     
 }
+
