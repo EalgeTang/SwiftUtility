@@ -7,6 +7,14 @@
 //
 
 import UIKit
+
+func DLog<T>(_ message : T, file : String = #file, funcName : String = #function, lineNum : Int = #line) {
+    #if DEBUG
+        let fileName = (file as NSString).lastPathComponent
+        print("\n>>> \(Date())  \(fileName) (line: \(lineNum)): \(message)\n")
+    #endif
+}
+
  ///命名空间部分
 public protocol TTNamespaceWrappable {
     associatedtype WrapperType
