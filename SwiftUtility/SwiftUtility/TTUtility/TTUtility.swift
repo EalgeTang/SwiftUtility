@@ -51,6 +51,96 @@ extension TTTypeWrapperProtocol where WrappedType: NSObject{
 }
 
 extension TTTypeWrapperProtocol where WrappedType: UIView {
+    var x: CGFloat {
+        set {
+
+        }
+        get {
+            wrappedValue.frame.origin.x
+        }
+    }
+    func setupX(_ newValue:CGFloat) {
+        var frame = wrappedValue.frame;
+        frame.origin.x = newValue
+        wrappedValue.frame = frame
+    }
+    
+    var y: CGFloat{
+        set {
+            var frame = wrappedValue.frame;
+            frame.origin.y = newValue
+            wrappedValue.frame = frame
+        }
+        get {
+            wrappedValue.frame.origin.y
+        }
+    }
+    
+    var width: CGFloat {
+        set {
+            var frame = wrappedValue.frame;
+            frame.size.width = newValue
+            wrappedValue.frame = frame
+        }
+        get {
+            wrappedValue.frame.width
+        }
+    }
+    
+    var height: CGFloat {
+        set {
+            var frame = wrappedValue.frame;
+            frame.size.height = newValue
+            wrappedValue.frame = frame
+        }
+        get {
+            wrappedValue.frame.height
+        }
+    }
+    
+    var left: CGFloat {
+        set {
+            var frame = wrappedValue.frame;
+            frame.origin.x = newValue
+            wrappedValue.frame = frame
+        }
+        get {
+            wrappedValue.frame.origin.x
+        }
+    }
+    
+    var right: CGFloat{
+        set {
+            var frame = wrappedValue.frame;
+            frame.origin.x = newValue-frame.width
+            wrappedValue.frame = frame
+        }
+        get {
+            wrappedValue.frame.maxX
+        }
+    }
+    
+    var top:CGFloat {
+        set {
+            var frame = wrappedValue.frame;
+            frame.origin.y = newValue
+            wrappedValue.frame = frame
+        }
+        get {
+            wrappedValue.frame.origin.y
+        }
+    }
+    
+    var bottom: CGFloat {
+        set {
+            var frame = wrappedValue.frame;
+            frame.origin.y = newValue + frame.height
+            wrappedValue.frame = frame
+        }
+        get {
+            wrappedValue.frame.maxY
+        }
+    }
      /// 设置圆角
     func setupConnerRadius(_ radius: CGFloat, borderColor: UIColor? = nil, borderWidth: CGFloat = 0) {
         wrappedValue.layer.masksToBounds = true
