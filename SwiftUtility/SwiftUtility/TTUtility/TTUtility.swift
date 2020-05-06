@@ -174,9 +174,9 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
 
 extension UIButton {
     enum DistributionStyle:Int {
-        case imageTop = 0
-        case imageLeft = 1
+        case imageTop = 0, imageLeft, imageBottom, imageRight
     }
+    
 }
 
 extension TTTypeWrapperProtocol where WrappedType: UIButton {
