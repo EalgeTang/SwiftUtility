@@ -15,10 +15,12 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         let vi = UIView(frame: CGRect(x: 0, y: 100, width: 100, height: 100))
         self.view.addSubview(vi)
-        vi.backgroundColor = UIColor(hex: "#000000")
-        
+        vi.backgroundColor = UIColor(230, g: 120, b: 137)
+        let btn = UIButton(type: .custom)
     }
 
-
+    @objc func test() {
+        
+    }
 }
 
