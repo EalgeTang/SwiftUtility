@@ -15,33 +15,23 @@ func DLog<T>(_ message : T, file : String = #file, funcName : String = #function
     #endif
 }
 
- ///命名空间部分
-public protocol TTNamespaceWrappable {
-    associatedtype WrapperType
-    var tt: WrapperType { get }
-    static var tt: WrapperType.Type { get }
-}
+extension UIColor {
+    convenience init(hex: String, alpha: CGFloat = 1.0) {
+        var hexFormatted = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
 
-public extension TTNamespaceWrappable {
-    var tt: TTNamespaceWrapper<Self> {
-        return TTNamespaceWrapper(value: self)
-    }
+        if hexFormatted.hasPrefix("#") {
+            hexFormatted = String(hexFormatted.dropFirst())
+        }
 
-    static var tt: TTNamespaceWrapper<Self>.Type {
-        return TTNamespaceWrapper.self
-    }
-}
+        assert(hexFormatted.count == 6, "Invalid hex code used.")
 
-public protocol TTTypeWrapperProtocol {
-    associatedtype WrappedType
-    var wrappedValue: WrappedType { get }
-    init(value: WrappedType)
-}
+        var rgbValue: UInt64 = 0
+        Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
 
-public struct TTNamespaceWrapper<T>: TTTypeWrapperProtocol {
-    public let wrappedValue: T
-    public init(value: T) {
-        self.wrappedValue = value
+        self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+                  green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+                  blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+                  alpha: alpha)
     }
 }
 
@@ -181,5 +171,35 @@ extension TTTypeWrapperProtocol where WrappedType: UICollectionViewCell {
 class TTUtility: NSObject {
 
     
+}
+
+ ///命名空间部分
+public protocol TTNamespaceWrappable {
+    associatedtype WrapperType
+    var tt: WrapperType { get }
+    static var tt: WrapperType.Type { get }
+}
+
+public extension TTNamespaceWrappable {
+    var tt: TTNamespaceWrapper<Self> {
+        return TTNamespaceWrapper(value: self)
+    }
+
+    static var tt: TTNamespaceWrapper<Self>.Type {
+        return TTNamespaceWrapper.self
+    }
+}
+
+public protocol TTTypeWrapperProtocol {
+    associatedtype WrappedType
+    var wrappedValue: WrappedType { get }
+    init(value: WrappedType)
+}
+
+public struct TTNamespaceWrapper<T>: TTTypeWrapperProtocol {
+    public let wrappedValue: T
+    public init(value: T) {
+        self.wrappedValue = value
+    }
 }
 
