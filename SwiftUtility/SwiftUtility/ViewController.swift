@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         let vi = UIView(frame: CGRect(x: 0, y: 100, width: 100, height: 100))
         self.view.addSubview(vi)
         vi.backgroundColor = UIColor(hex: "#000000")
-        DLog("杨红红是个傻")
+        
     }
 
 

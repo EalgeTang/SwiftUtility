@@ -39,20 +39,14 @@ extension NSObject: TTNamespaceWrappable{}
 extension TTTypeWrapperProtocol where WrappedType: NSObject{
     
     func className() -> String{
-        let cls = type(of: wrappedValue)
+        let cls =  type(of: wrappedValue)
         return NSStringFromClass(cls)
     }
     
-//    static func className() -> String {
-//        return NSStringFromClass(WrappedType.self)
-//    }
 }
 
 extension TTTypeWrapperProtocol where WrappedType: UIView {
     var x: CGFloat {
-        set {
-
-        }
         get {
             wrappedValue.frame.origin.x
         }
@@ -150,11 +144,10 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
 //    @discardableResult
 //    func addGesture(_ target:Any?,  action: Selector, cls: AnyClass) -> UIGestureRecognizer? {
 //
-//        guard cls.isSubclass(of: UIGestureRecognizer.self) else {
+//        guard cls.isSubclass(of: UIGestureRecognizer.Type) else {
 //            return nil;
 //        }
 //        wrappedValue.isUserInteractionEnabled = true
-//
 //        return nil
 //    }
 }
