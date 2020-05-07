@@ -26,6 +26,10 @@ func tkColor(r:CGFloat, g:CGFloat, b: CGFloat, alpha: CGFloat = 1) -> UIColor {
     return UIColor(r, g: g, b: b, alpha: alpha)
 }
 
+//func tkCurrentViewController() -> UIViewController {
+//    
+//}
+
 extension UIColor {
     convenience init(hex: String, alpha: CGFloat = 1.0) {
         var hexFormatted = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
@@ -56,6 +60,18 @@ extension TTTypeWrapperProtocol where WrappedType: NSObject{
     func className() -> String{
         let cls = type(of: wrappedValue)
         return NSStringFromClass(cls)
+    }
+    
+}
+
+extension TTTypeWrapperProtocol where WrappedType: NSLayoutConstraint {
+    
+    func add(_ x: CGFloat) {
+        wrappedValue.constant += x
+    }
+    
+    func mutiply(_ x: CGFloat) {
+        wrappedValue.constant = wrappedValue.constant * x
     }
     
 }
@@ -171,6 +187,21 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
         wrappedValue.layer.borderWidth = borderWidth
         wrappedValue.layer.borderColor = borderColor?.cgColor
     }
+    
+    func screenShot(size: CGSize = CGSize.zero) -> UIImage? {
+        var targetSize = size
+        if size == CGSize.zero {
+            targetSize = wrappedValue.frame.size
+        }
+        UIGraphicsBeginImageContextWithOptions(targetSize, false, 0.0)
+        guard let ctx = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        wrappedValue.layer.render(in: ctx)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
 //    ///添加手势     `@discardableResult` 用来告知编辑器结果外部可以不用接收, 否则编辑器会报黄
 //    @discardableResult
 //    func addGesture(_ target:Any?,  action: Selector, cls: UIGestureRecognizer.Type) -> UIGestureRecognizer? {
@@ -244,7 +275,6 @@ extension TTTypeWrapperProtocol where WrappedType: UIButton {
         } else {
             wrappedValue.setImage(image, for: state)
         }
-        
     }
 }
 // MARK: - UIImage
@@ -256,6 +286,28 @@ extension TTTypeWrapperProtocol where WrappedType: UIImage {
         return wrappedValue .resizableImage(withCapInsets: UIEdgeInsets(top: ver, left: hor, bottom: ver, right: hor),
                                             resizingMode: .stretch)
         
+    }
+    
+    /// 修改图片颜色
+    func render(color:UIColor) -> UIImage? {
+        guard let cgImage = wrappedValue.cgImage else {
+            return nil
+        }
+        UIGraphicsBeginImageContextWithOptions(wrappedValue.size, true, 0.0)
+        let ctx = UIGraphicsGetCurrentContext()
+        let area = CGRect(x: 0, y: 0, width: wrappedValue.size.width, height: wrappedValue.size.height)
+        ctx?.scaleBy(x: 1, y: -1)
+        ctx?.translateBy(x: 0, y: -area.size.height)
+        ctx?.saveGState()
+        ctx?.clip(to: area, mask: cgImage)
+        color.set()
+        ctx?.fill(area)
+        ctx?.restoreGState()
+        ctx?.setBlendMode(.multiply)
+        ctx?.draw(cgImage, in: area)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
 }
 

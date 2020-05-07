@@ -21,7 +21,6 @@ class ViewController: UIViewController {
         vi.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         vi.addGestureRecognizer(tap)
-        self.vi = vi
     }
     
     override func viewDidAppear(_ animated: Bool) {
