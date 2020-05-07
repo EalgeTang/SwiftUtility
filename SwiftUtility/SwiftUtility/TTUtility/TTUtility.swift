@@ -59,13 +59,13 @@ extension TTTypeWrapperProtocol where WrappedType: NSObject{
     }
     
 }
-
+// MARK: - UIView
 extension TTTypeWrapperProtocol where WrappedType: UIView {
-    var x: CGFloat {
-        get {
-            wrappedValue.frame.origin.x
-        }
-    }
+//    var x: CGFloat {
+//        get {
+//            wrappedValue.frame.origin.x
+//        }
+//    }
     
 //    @discardableResult
 //    func setupX(_ newValue:CGFloat) ->WrappedType {
@@ -75,11 +75,11 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
 //        return wrappedValue
 //    }
     
-    var y: CGFloat{
-        get {
-            wrappedValue.frame.origin.y
-        }
-    }
+//    var y: CGFloat{
+//        get {
+//            wrappedValue.frame.origin.y
+//        }
+//    }
     
 //    @discardableResult
 //    func setupY(_ newValue:CGFloat) ->WrappedType  {
@@ -88,71 +88,71 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
 //        wrappedValue.frame = frame
 //        return wrappedValue
 //    }
-    var width: CGFloat {
-        set {
-            var frame = wrappedValue.frame;
-            frame.size.width = newValue
-            wrappedValue.frame = frame
-        }
-        get {
-            wrappedValue.frame.width
-        }
-    }
-    
-    var height: CGFloat {
-        set {
-            var frame = wrappedValue.frame;
-            frame.size.height = newValue
-            wrappedValue.frame = frame
-        }
-        get {
-            wrappedValue.frame.height
-        }
-    }
-    
-    var left: CGFloat {
-        set {
-            var frame = wrappedValue.frame;
-            frame.origin.x = newValue
-            wrappedValue.frame = frame
-        }
-        get {
-            wrappedValue.frame.origin.x
-        }
-    }
-    
-    var right: CGFloat{
-        set {
-            var frame = wrappedValue.frame;
-            frame.origin.x = newValue-frame.width
-            wrappedValue.frame = frame
-        }
-        get {
-            wrappedValue.frame.maxX
-        }
-    }
-    
-    var top:CGFloat {
-        set {
-            var frame = wrappedValue.frame;
-            frame.origin.y = newValue
-            wrappedValue.frame = frame
-        }
-        get {
-            wrappedValue.frame.origin.y
-        }
-    }
-    
-    var bottom: CGFloat {
-        set {
-            var frame = wrappedValue.frame;
-            frame.origin.y = newValue + frame.height
-            wrappedValue.frame = frame
-        }
-        get {
-            wrappedValue.frame.maxY
-        }
-    }
+//    var width: CGFloat {
+//        set {
+//            var frame = wrappedValue.frame;
+//            frame.size.width = newValue
+//            wrappedValue.frame = frame
+//        }
+//        get {
+//            wrappedValue.frame.width
+//        }
+//    }
+//
+//    var height: CGFloat {
+//        set {
+//            var frame = wrappedValue.frame;
+//            frame.size.height = newValue
+//            wrappedValue.frame = frame
+//        }
+//        get {
+//            wrappedValue.frame.height
+//        }
+//    }
+//
+//    var left: CGFloat {
+//        set {
+//            var frame = wrappedValue.frame;
+//            frame.origin.x = newValue
+//            wrappedValue.frame = frame
+//        }
+//        get {
+//            wrappedValue.frame.origin.x
+//        }
+//    }
+//
+//    var right: CGFloat{
+//        set {
+//            var frame = wrappedValue.frame;
+//            frame.origin.x = newValue-frame.width
+//            wrappedValue.frame = frame
+//        }
+//        get {
+//            wrappedValue.frame.maxX
+//        }
+//    }
+//
+//    var top:CGFloat {
+//        set {
+//            var frame = wrappedValue.frame;
+//            frame.origin.y = newValue
+//            wrappedValue.frame = frame
+//        }
+//        get {
+//            wrappedValue.frame.origin.y
+//        }
+//    }
+//
+//    var bottom: CGFloat {
+//        set {
+//            var frame = wrappedValue.frame;
+//            frame.origin.y = newValue + frame.height
+//            wrappedValue.frame = frame
+//        }
+//        get {
+//            wrappedValue.frame.maxY
+//        }
+//    }
      /// 设置圆角
     func setupConnerRadius(_ radius: CGFloat, borderColor: UIColor? = nil, borderWidth: CGFloat = 0) {
         wrappedValue.layer.masksToBounds = true
@@ -171,12 +171,43 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
 //        return ges
 //    }
 }
-
+// MARK: - UIButton
 extension UIButton {
     enum DistributionStyle:Int {
         case imageTop = 0, imageLeft, imageBottom, imageRight
     }
     
+    func layoutButton(distributionStyle: DistributionStyle, space: CGFloat) {
+        
+        let imageWidth = self.currentImage?.size.width ?? 0;
+        let imageHeight = self.currentImage?.size.height ?? 0;
+        let labelWidth = self.titleLabel?.intrinsicContentSize.width ?? 0;
+        let labelHeight = self.titleLabel?.intrinsicContentSize.width ?? 0;
+        
+        var imageEdgeInsets = UIEdgeInsets()
+        var labelEdgeInsets = UIEdgeInsets()
+        switch distributionStyle {
+        case .imageTop:
+            imageEdgeInsets = UIEdgeInsets(top: -labelHeight-space/2.0, left: 0, bottom: 0, right: -labelWidth)
+            labelEdgeInsets = UIEdgeInsets(top: 0, left: -imageWidth, bottom: -imageHeight-space/2.0, right: 0)
+        case .imageLeft:
+            imageEdgeInsets = UIEdgeInsets(top: 0, left: -space/2.0, bottom: 0, right: space/2.0)
+            labelEdgeInsets = UIEdgeInsets(top: 0, left: space/2.0, bottom: 0, right: -space/2.0)
+        case .imageBottom:
+            imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: -labelHeight-space/2.0, right: -labelWidth)
+            labelEdgeInsets = UIEdgeInsets(top: -imageHeight-space/2.0, left: -imageWidth, bottom: 0, right: 0)
+        case .imageRight:
+            imageEdgeInsets = UIEdgeInsets(top: 0, left: labelWidth+space/2.0, bottom: 0, right: -labelWidth-space/2.0)
+            labelEdgeInsets = UIEdgeInsets(top: 0, left: -imageWidth-space/2.0, bottom: 0, right: imageWidth+space/2.0)
+            
+        }
+        self.titleEdgeInsets = labelEdgeInsets
+        self.imageEdgeInsets = imageEdgeInsets
+        
+        
+        
+        
+    }
 }
 
 extension TTTypeWrapperProtocol where WrappedType: UIButton {
@@ -195,6 +226,21 @@ extension TTTypeWrapperProtocol where WrappedType: UIButton {
     }
 }
 
+extension TTTypeWrapperProtocol where WrappedType: UIButton {
+    
+    /// 以拉伸部分区域的形式去改变图片, isBackground默认值为true
+    func updateImageForScretch(state: UIButton.State, isBackground: Bool = true) {
+        var image = isBackground ? wrappedValue.backgroundImage(for: state) :wrappedValue.image(for: state)
+        image = image?.tt.resizableImageForStretch()
+        if isBackground {
+            wrappedValue.setImage(image, for: state)
+        } else {
+            wrappedValue.setImage(image, for: state)
+        }
+        
+    }
+}
+// MARK: - UIImage
 extension TTTypeWrapperProtocol where WrappedType: UIImage {
     
      func resizableImageForStretch() -> UIImage {
@@ -206,6 +252,7 @@ extension TTTypeWrapperProtocol where WrappedType: UIImage {
     }
 }
 
+// MARK: - UITableView
 extension TTTypeWrapperProtocol where WrappedType: UITableView {
     
     func register(nibCellClass cls: AnyClass, identifier: String? = nil) {
@@ -215,6 +262,7 @@ extension TTTypeWrapperProtocol where WrappedType: UITableView {
     }
 }
 
+// MARK: - UICollectionView
 extension TTTypeWrapperProtocol where WrappedType: UICollectionView {
     
     func register(nibCellClass nibClass: AnyClass, identifier: String? = nil) {
@@ -236,6 +284,7 @@ extension TTTypeWrapperProtocol where WrappedType: UICollectionView {
     }
 }
 
+// MARK: - UICollectionViewCell
 extension TTTypeWrapperProtocol where WrappedType: UICollectionViewCell {
     
     var cellIdentifer: String {
