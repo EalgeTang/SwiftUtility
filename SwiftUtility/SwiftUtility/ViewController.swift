@@ -18,14 +18,18 @@ class ViewController: UIViewController {
         let vi = UIView(frame: CGRect(x: 0, y: 100, width: 100, height: 100))
         self.view.addSubview(vi)
         vi.backgroundColor = UIColor(230, g: 120, b: 137)
+        vi.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        vi.addGestureRecognizer(tap)
         self.vi = vi
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    @objc func tapAction() {
         self.vi?.tt.shake()
     }
-    
     @objc func test() {
         
     }
