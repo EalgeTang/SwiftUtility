@@ -153,6 +153,17 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
 //            wrappedValue.frame.maxY
 //        }
 //    }
+    
+    func shake() {
+        let keyAnimaiton = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        let shakeWidth = 16.0
+        keyAnimaiton.values = [-shakeWidth, 0, shakeWidth, 0, -shakeWidth, 0, shakeWidth, 0]
+        keyAnimaiton.duration = 0.1
+        keyAnimaiton.repeatCount = 2
+        keyAnimaiton.isRemovedOnCompletion = true
+        wrappedValue.layer.add(keyAnimaiton, forKey: "shake")
+        
+    }
      /// 设置圆角
     func setupConnerRadius(_ radius: CGFloat, borderColor: UIColor? = nil, borderWidth: CGFloat = 0) {
         wrappedValue.layer.masksToBounds = true
@@ -203,10 +214,6 @@ extension UIButton {
         }
         self.titleEdgeInsets = labelEdgeInsets
         self.imageEdgeInsets = imageEdgeInsets
-        
-        
-        
-        
     }
 }
 
