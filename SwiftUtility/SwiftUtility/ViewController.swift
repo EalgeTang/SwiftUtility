@@ -21,6 +21,9 @@ class ViewController: UIViewController {
         vi.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         vi.addGestureRecognizer(tap)
+        for index in 1..<5 {
+            DLog("index is \(index)")
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -26,10 +26,12 @@ func tkColor(r:CGFloat, g:CGFloat, b: CGFloat, alpha: CGFloat = 1) -> UIColor {
     return UIColor(r, g: g, b: b, alpha: alpha)
 }
 
-func tkCurrentViewController() -> UIViewController? {
-     UIApplication.shared.delegate?.window??.rootViewController
-    
-}
+//func tkCurrentViewController() -> UIViewController? {
+//    let vc = UIApplication.shared.delegate?.window??.rootViewController
+//    repeat{
+//        
+//    }
+//}
 
 extension UIColor {
     convenience init(hex: String, alpha: CGFloat = 1.0) {
