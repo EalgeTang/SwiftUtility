@@ -18,17 +18,55 @@ public func DLog<T>(_ message : T, file : String = #file, funcName : String = #f
     #endif
 }
 
-func tkColor(hex: String, alpha: CGFloat = 1) -> UIColor {
+public func tkStatusBarHeight() -> CGFloat {
+    if #available(iOS 13, *) {
+        let window = tkCurrentWindow()
+        return window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0
+    } else {
+        return UIApplication.shared.statusBarFrame.size.height
+    }
+}
+
+func tkRandowColor() -> UIColor {
+    let rValue = arc4random() % 255
+    let gValue = arc4random() % 255
+    let bValue = arc4random() % 255
+    return UIColor(red: CGFloat(rValue)/255.0, green: CGFloat(gValue)/255.0, blue: CGFloat(bValue)/255.0, alpha: 1)
+}
+
+public func tkColor(hex: String, alpha: CGFloat = 1) -> UIColor {
     return UIColor(hex: hex, alpha: alpha)
 }
 
-func tkColor(r:CGFloat, g:CGFloat, b: CGFloat, alpha: CGFloat = 1) -> UIColor {
+public func tkColor(r:CGFloat, g:CGFloat, b: CGFloat, alpha: CGFloat = 1) -> UIColor {
     return UIColor(r, g: g, b: b, alpha: alpha)
+}
+
+func tkDoucumentPath() -> String {
+    let string = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""
+    return string
+}
+
+func tkCachePath() -> String {
+    let string = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first ?? ""
+    return string
+}
+
+func tkCachePathAppend(_ string: String) -> String {
+    let home = tkCachePath() as NSString
+    let path = home.appendingPathComponent(string)
+    return path
+}
+
+func tkDoucumentPathAppend(_ string: String) -> String {
+    let home = tkDoucumentPath() as NSString
+    let path = home.appendingPathComponent(string)
+    return path
 }
 
 /// 获取当前VC, 不支持多窗口, 如果实现了SceneDelegate 则无法使用此方法查找, rootViewController的获取不同
 func tkCurrentViewController() -> UIViewController? {
-    var vc = UIApplication.shared.delegate?.window??.rootViewController
+    var vc = tkCurrentWindow()?.rootViewController
     while true {
         if let tab = vc as? UITabBarController {
             vc = tab.selectedViewController
@@ -43,6 +81,10 @@ func tkCurrentViewController() -> UIViewController? {
         }
     }
     return vc
+}
+
+func tkCurrentWindow() -> UIWindow? {
+    UIApplication.shared.delegate?.window ?? nil
 }
 
 extension UIColor {
@@ -217,16 +259,27 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
         UIGraphicsEndImageContext()
         return image
     }
-//    ///添加手势     `@discardableResult` 用来告知编辑器结果外部可以不用接收, 否则编辑器会报黄
-//    @discardableResult
-//    func addGesture(_ target:Any?,  action: Selector, cls: UIGestureRecognizer.Type) -> UIGestureRecognizer? {
-//
-//        wrappedValue.isUserInteractionEnabled = true
-//        let ges = UIGestureRecognizer(target: target, action: action)
-//
-//        wrappedValue.addGestureRecognizer(ges)
-//        return ges
+//    func add(<#parameters#>) -> <#return type#> {
+//        <#function body#>
 //    }
+    /// 添加一个点击手势
+    @discardableResult
+    func addTapGesture(_ target: Any? = nil, action: Selector) -> UITapGestureRecognizer {
+        return self.addGesture(target, action: action, cls: UITapGestureRecognizer.self) as! UITapGestureRecognizer
+    }
+    
+    ///添加手势     `@discardableResult` 用来告知编辑器结果外部可以不用接收, 否则编辑器会报黄
+    @discardableResult
+    func addGesture(_ target: Any? = nil,  action: Selector, cls: UIGestureRecognizer.Type) -> UIGestureRecognizer {
+        var obj = target
+        if target == nil {
+            obj = wrappedValue
+        }
+        wrappedValue.isUserInteractionEnabled = true
+        let ges = cls.init(target: obj, action: action)
+        wrappedValue.addGestureRecognizer(ges)
+        return ges
+    }
 }
 // MARK: - UIButton
 extension UIButton {
