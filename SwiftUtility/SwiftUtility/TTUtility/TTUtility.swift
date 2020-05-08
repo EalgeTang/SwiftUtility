@@ -259,13 +259,34 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
         UIGraphicsEndImageContext()
         return image
     }
-//    func add(<#parameters#>) -> <#return type#> {
-//        <#function body#>
-//    }
+    /// 添加一个边缘拖动手势
+    func addScreenEdgePanGesture(_ target: Any? = nil, action: Selector) -> UIScreenEdgePanGestureRecognizer {
+        self.addGesture(target, action: action, cls: UIScreenEdgePanGestureRecognizer.self) as! UIScreenEdgePanGestureRecognizer
+    }
+    /// 添加一个长按手势
+    func addLongPressGesture(_ target: Any? = nil, action: Selector) -> UILongPressGestureRecognizer {
+        self.addGesture(target, action: action, cls: UILongPressGestureRecognizer.self) as! UILongPressGestureRecognizer
+    }
+    /// 添加一个捏合手势
+    func addPinGesture(_ target: Any? = nil, action: Selector) -> UIPinchGestureRecognizer {
+        self.addGesture(target, action: action, cls: UIPinchGestureRecognizer.self) as! UIPinchGestureRecognizer
+    }
+    /// 添加一个旋转手势
+    func addRotationGesture(_ target: Any? = nil, action: Selector) -> UIRotationGestureRecognizer {
+        self.addGesture(target, action: action, cls: UIRotationGestureRecognizer.self) as! UIRotationGestureRecognizer
+    }
+    /// 添加一个轻扫手势
+    func addSwipeGesture(_ target: Any? = nil, action : Selector) -> UISwipeGestureRecognizer {
+        self.addGesture(target, action: action, cls: UISwipeGestureRecognizer.self) as! UISwipeGestureRecognizer
+    }
+    /// 添加一个拖动手势
+    func addPanGesture(_ target: Any? = nil, action: Selector) -> UIPanGestureRecognizer {
+        self.addGesture(target, action: action, cls: UIPanGestureRecognizer.self) as! UIPanGestureRecognizer
+    }
     /// 添加一个点击手势
     @discardableResult
     func addTapGesture(_ target: Any? = nil, action: Selector) -> UITapGestureRecognizer {
-        return self.addGesture(target, action: action, cls: UITapGestureRecognizer.self) as! UITapGestureRecognizer
+         self.addGesture(target, action: action, cls: UITapGestureRecognizer.self) as! UITapGestureRecognizer
     }
     
     ///添加手势     `@discardableResult` 用来告知编辑器结果外部可以不用接收, 否则编辑器会报黄
