@@ -26,12 +26,24 @@ func tkColor(r:CGFloat, g:CGFloat, b: CGFloat, alpha: CGFloat = 1) -> UIColor {
     return UIColor(r, g: g, b: b, alpha: alpha)
 }
 
-//func tkCurrentViewController() -> UIViewController? {
-//    let vc = UIApplication.shared.delegate?.window??.rootViewController
-//    repeat{
-//        
-//    }
-//}
+/// 获取当前VC, 不支持多窗口, 如果实现了SceneDelegate 则无法使用此方法查找, rootViewController的获取不同
+func tkCurrentViewController() -> UIViewController? {
+    var vc = UIApplication.shared.delegate?.window??.rootViewController
+    while true {
+        if let tab = vc as? UITabBarController {
+            vc = tab.selectedViewController
+        }
+        if let nav = vc as? UINavigationController {
+            vc = nav.visibleViewController
+        }
+        if let present = vc?.presentedViewController {
+            vc = present
+        } else {
+            break
+        }
+    }
+    return vc
+}
 
 extension UIColor {
     convenience init(hex: String, alpha: CGFloat = 1.0) {
