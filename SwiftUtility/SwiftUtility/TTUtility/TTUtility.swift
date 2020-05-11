@@ -58,6 +58,24 @@ extension TTTypeWrapperProtocol where WrappedType: NSObject{
 //    }
 }
 
+extension TTTypeWrapperProtocol where WrappedType== UIColor{
+    
+    ///UIColor转化为16进制
+    public var hex: String {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        wrappedValue.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        var rgb: Int = (Int)(red * 255) << 16 | (Int)(green * 255) << 8
+        rgb = rgb | (Int)(blue * 255) << 0
+        
+        return String(format: "#%06x", rgb)
+    }
+    
+}
 extension TTTypeWrapperProtocol where WrappedType: UIView {
     var x: CGFloat {
         set {
