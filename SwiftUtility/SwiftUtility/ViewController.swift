@@ -30,9 +30,19 @@ class ViewController: UIViewController {
         print("value is \(value4)")
         
         DLog("array is \(arr)")
-        
+
+        let ss: Int32 = 0b1
+        let bt = UIButton(type: .custom)
+        bt.setTitle("锤弟弟", for: [.normal, .highlighted])
+        DLog(ss)
     }
     
+    @objc func abcd(block:block){
+            
+    }
+    
+    }
+
     func makeIncrementer(forIncrement amount: Int) -> () -> Int {
         var runningTotal = 0
         func incrementer() -> Int{
@@ -41,8 +51,4 @@ class ViewController: UIViewController {
         }
         return incrementer
     }
-    @objc func abcd(block:block){
-            
-    }
-}
 
