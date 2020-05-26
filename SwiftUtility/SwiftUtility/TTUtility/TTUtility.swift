@@ -120,7 +120,6 @@ extension TTTypeWrapperProtocol where WrappedType: NSObject{
     }
     
 }
-
 extension TTTypeWrapperProtocol where WrappedType: NSLayoutConstraint {
     
     func add(_ x: CGFloat) {
@@ -132,7 +131,7 @@ extension TTTypeWrapperProtocol where WrappedType: NSLayoutConstraint {
     }
     
 }
-// MARK: - UIView
+
 extension TTTypeWrapperProtocol where WrappedType: UIView {
 //    var x: CGFloat {
 //        get {
@@ -260,26 +259,32 @@ extension TTTypeWrapperProtocol where WrappedType: UIView {
         return image
     }
     /// 添加一个边缘拖动手势
+    @discardableResult
     func addScreenEdgePanGesture(_ target: Any? = nil, action: Selector) -> UIScreenEdgePanGestureRecognizer {
         self.addGesture(target, action: action, cls: UIScreenEdgePanGestureRecognizer.self) as! UIScreenEdgePanGestureRecognizer
     }
     /// 添加一个长按手势
+    @discardableResult
     func addLongPressGesture(_ target: Any? = nil, action: Selector) -> UILongPressGestureRecognizer {
         self.addGesture(target, action: action, cls: UILongPressGestureRecognizer.self) as! UILongPressGestureRecognizer
     }
     /// 添加一个捏合手势
+    @discardableResult
     func addPinGesture(_ target: Any? = nil, action: Selector) -> UIPinchGestureRecognizer {
         self.addGesture(target, action: action, cls: UIPinchGestureRecognizer.self) as! UIPinchGestureRecognizer
     }
     /// 添加一个旋转手势
+    @discardableResult
     func addRotationGesture(_ target: Any? = nil, action: Selector) -> UIRotationGestureRecognizer {
         self.addGesture(target, action: action, cls: UIRotationGestureRecognizer.self) as! UIRotationGestureRecognizer
     }
     /// 添加一个轻扫手势
+    @discardableResult
     func addSwipeGesture(_ target: Any? = nil, action : Selector) -> UISwipeGestureRecognizer {
         self.addGesture(target, action: action, cls: UISwipeGestureRecognizer.self) as! UISwipeGestureRecognizer
     }
     /// 添加一个拖动手势
+    @discardableResult
     func addPanGesture(_ target: Any? = nil, action: Selector) -> UIPanGestureRecognizer {
         self.addGesture(target, action: action, cls: UIPanGestureRecognizer.self) as! UIPanGestureRecognizer
     }
