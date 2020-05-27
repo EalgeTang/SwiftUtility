@@ -11,6 +11,9 @@ import UIKit
 let tkDevice_Width = UIScreen.main.bounds.width
 let tkDevice_Height = UIScreen.main.bounds.height
 
+typealias voidClosure = () ->Void
+typealias optionVoidClosure = (()->Void)?
+
 public func DLog<T>(_ message : T, file : String = #file, funcName : String = #function, lineNum : Int = #line) {
     #if DEBUG
         let fileName = (file as NSString).lastPathComponent
@@ -27,6 +30,15 @@ public func tkStatusBarHeight() -> CGFloat {
     }
 }
 
+public func tkDispatch_safe_main_queue(_ closure: @escaping ()->Void) {
+    if Thread.isMainThread {
+        closure()
+    } else {
+        DispatchQueue.main.async {
+         closure()
+        }
+    }
+}
 func tkRandowColor() -> UIColor {
     let rValue = arc4random() % 255
     let gValue = arc4random() % 255
