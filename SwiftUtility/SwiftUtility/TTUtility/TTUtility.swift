@@ -21,6 +21,18 @@ public func DLog<T>(_ message : T, file : String = #file, funcName : String = #f
     #endif
 }
 
+public func tkPostNotification(name: NSNotification.Name, obj:Any? = nil) {
+    NotificationCenter.default.post(name: name, object: obj)
+}
+
+public func tkAddNotification(observer: Any, selector:Selector,name: NSNotification.Name,obj: Any? = nil) {
+    NotificationCenter.default.addObserver(observer, selector: selector, name: name, object: obj)
+}
+
+public func tkRemoveNotification(observer: Any){
+    NotificationCenter.default.removeObserver(observer)
+}
+
 public func tkStatusBarHeight() -> CGFloat {
     if #available(iOS 13, *) {
         let window = tkCurrentWindow()

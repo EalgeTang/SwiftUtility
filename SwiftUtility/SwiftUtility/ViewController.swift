@@ -35,6 +35,7 @@ class ViewController: UIViewController {
         let bt = UIButton(type: .custom)
         bt.setTitle("锤弟弟", for: [.normal, .highlighted])
         DLog(ss)
+        
     }
     
     @objc func abcd(block:block){
